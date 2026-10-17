@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install the application dependencies
-RUN npm install
+RUN npm ci
 
 # Copy the rest of the application files
 COPY . .
@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # # Production Stage
-FROM node:24-alpine
+FROM node:24-alpine AS runner
 
 WORKDIR /app
 
@@ -25,7 +25,7 @@ COPY --from=builder /app/dist /app/dist
 COPY --from=builder /app/package*.json /app
 RUN mkdir /app/resources
 
-RUN npm install --omit=dev
+RUN npm ci --omit=dev
 
 # Expose the application port
 EXPOSE 3000

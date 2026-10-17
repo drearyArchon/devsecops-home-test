@@ -41,8 +41,15 @@
     "tailwindcss": "^4.3.3",
     "typeorm": "^1.1.0"
   },
+  "overrides": {
+    "multer": "^2.4.0",
+    "minimatch": {
+      "brace-expansion": "^5.0.12"
+    },
+    "undici": "^6.28.1"
+  },
   "devDependencies": {
-    "@nestjs/cli": "^12.0.0",
+    "@nestjs/cli": "^12.0.8",
     "@nestjs/mau": "^0.2.6",
     "@nestjs/schematics": "^12.0.0",
     "@nestjs/testing": "^12.0.1",
