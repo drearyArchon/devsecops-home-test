@@ -35,7 +35,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   trivy_scan:
-    name: Vulnerability Scan
+    name: Trivy Vulnerability Scan
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
@@ -44,12 +44,12 @@ jobs:
           fetch-depth: 0
       - name: Build Docker image
         run: |
-          docker build -t attendance-board:{{ github.sha }} ./app
+          docker build -t attendance-board:v0.0.1 ./app
 
-      - name: Trivy Vulnerability Scanner
+      - name: Vulnerability Scan
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: 'attendance-board:{{ github.sha }}'
+          image-ref: 'attendance-board:v0.0.1'
           format: 'sarif'
           exit-code: 0
           severity: 'CRITICAL,HIGH'
