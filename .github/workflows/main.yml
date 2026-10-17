@@ -1,0 +1,29 @@
+name: Quality Check
+
+on:
+  push:
+    branches:
+    - main
+    - release/*
+jobs:
+  sonarqube:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Official SonarQube Scan
+      # You may pin to the exact commit or the version.
+      # uses: SonarSource/sonarqube-scan-action@d209202bc7d53ff1cc128f7f907dac145c9d6ae9
+      uses: SonarSource/sonarqube-scan-action@v8.3.0
+      with:
+        # Additional arguments to the Sonar Scanner CLI
+        args: # optional, default is 
+        # Set the sonar.projectBaseDir analysis property
+        projectBaseDir: # optional, default is .
+        # Version of the Sonar Scanner CLI to use
+        scannerVersion: # optional, default is 8.1.0.6389
+        # URL to download the Sonar Scanner CLI binaries from
+        scannerBinariesUrl: # optional, default is https://binaries.sonarsource.com/Distribution/sonar-scanner-cli
+        # Skip GPG signature verification (not recommended for security)
+        skipSignatureVerification: # optional, default is false
+        # Authorization header value to use when downloading the SonarScanner CLI binaries (e.g. 'Bearer mytoken' or 'Basic base64creds'). Use this when scannerBinariesUrl points to a private server that requires authentication.
+    
+        scannerBinariesAuthHeader: # optional, default is 
