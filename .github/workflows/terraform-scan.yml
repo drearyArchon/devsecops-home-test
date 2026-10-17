@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 
+        uses: actions/checkout@v7 
        
       - name: Scan Terraform  
         uses: aquasecurity/trivy-action@v0.36.0
@@ -31,7 +31,7 @@ jobs:
           format: 'sarif'
           scanners: 'vuln,secret,misconfig'
           severity: 'CRITICAL,HIGH,MEDIUM,LOW,UNKNOWN' 
-          exit-code: 0
+          exit-code: 1
           output: 'trivy-terraform-results.sarif' 
  
       - name: Upload Trivy scan results to GitHub Security tab
@@ -39,3 +39,8 @@ jobs:
         with:
             sarif_file: 'trivy-terraform-results.sarif'
   
+      - name: Upload IaC Scan Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: iac-scan-evidence
+          path: 'trivy-terraform-results.sarif'
