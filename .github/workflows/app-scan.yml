@@ -9,16 +9,15 @@ on:
       - 'app/**'
   workflow_dispatch:
 
-permissions:
-  actions: read
-  contents: read
-  pull-requests: write
-  security-events: write
-
 jobs:
   sonarqube:
     name: SonarQube Analysis
     runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+      contents: read
+      pull-requests: write
+      security-events: write
 
     steps:
       - name: Checkout repository
@@ -32,11 +31,11 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@master
+        uses: SonarSource/sonarqube-scan-action@d209202bc7d53ff1cc128f7f907dac145c9d6ae9
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: SonarQube Quality Gate check
-        uses: SonarSource/sonarqube-quality-gate-action@master
+        uses: SonarSource/sonarqube-quality-gate-action@7a5fffe8e523c40e0c740b6bc2712ab503e52efa
         timeout-minutes: 5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -44,6 +43,11 @@ jobs:
   trivy_scan:
     name: Trivy Vulnerability Scan
     runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+      contents: read
+      pull-requests: write
+      security-events: write
 
     steps:
       - name: Checkout repository

@@ -8,16 +8,15 @@ on:
       - 'terraform/**'
   workflow_dispatch:
 
-permissions:
-  actions: read
-  contents: read
-  pull-requests: write
-  security-events: write
-
 jobs:
   terraform_security_scan:
     name: Terraform Scan
     runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+      contents: read
+      pull-requests: write
+      security-events: write
 
     steps:
       - name: Checkout repository
