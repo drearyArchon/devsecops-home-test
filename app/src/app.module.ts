@@ -15,8 +15,8 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
 @Module({
   imports: [
     ObserveModule.forRoot({
-      appKey: 'YOUR_APP_KEY',
-      appSecret: 'YOUR_APP_SECRET',
+      appKey: process.env.OBSERVE_APP_KEY as string,
+      appSecret: process.env.OBSERVE_APP_SECRET as string,
       serviceId: 'attendance-board',
     }),
     ConfigModule.forRoot(),
@@ -25,11 +25,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     AuthModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DB_HOST ?? 'host.docker.internal',
-      port: parseInt(process.env.DB_PORT ?? '3306'),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DATABASE,
+      url: process.env.DB_URL,
       entities: [User, Image],
       timezone: '+07:00',
       dateStrings: false,
