@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install the application dependencies
-RUN npm ci
+RUN npm ci --ignore-scripts
 
 # Copy the rest of the application files
 COPY . .
@@ -25,7 +25,7 @@ COPY --from=builder /app/dist /app/dist
 COPY --from=builder /app/package*.json /app
 RUN mkdir /app/resources
 
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --ignore-scripts
 
 # Expose the application port
 EXPOSE 3000
