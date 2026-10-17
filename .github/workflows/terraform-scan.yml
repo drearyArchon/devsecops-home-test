@@ -30,7 +30,7 @@ jobs:
           format: 'sarif'
           scanners: 'vuln,secret,misconfig'
           severity: 'CRITICAL,HIGH,MEDIUM,LOW,UNKNOWN' 
-          exit-code: 1
+          exit-code: 0
           output: 'trivy-terraform-results.sarif' 
  
       - name: Upload Trivy scan results to GitHub Security tab

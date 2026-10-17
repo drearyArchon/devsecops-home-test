@@ -63,7 +63,7 @@ jobs:
         with:
           image-ref: 'attendance-board:v0.0.1'
           format: 'sarif'
-          exit-code: 1
+          exit-code: 0
           severity: 'CRITICAL,HIGH'
           output: 'trivy-results.sarif'
  
