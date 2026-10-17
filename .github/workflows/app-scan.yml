@@ -22,11 +22,11 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7 
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 
         with:
           fetch-depth: 0
       - name: Cache SonarQube packages
-        uses: actions/cache@v6
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -47,7 +47,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7 
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 0
       - name: Build Docker image
@@ -55,7 +55,7 @@ jobs:
           docker build -t attendance-board:v0.0.1 ./app
 
       - name: Vulnerability Scan
-        uses: aquasecurity/trivy-action@v0.36.0
+        uses: aquasecurity/trivy-action@6abccf398f78b4c337599c0656f933d91efb91a0
         with:
           image-ref: 'attendance-board:v0.0.1'
           format: 'sarif'
@@ -64,12 +64,12 @@ jobs:
           output: 'trivy-results.sarif'
  
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee
         with:
             sarif_file: 'trivy-results.sarif'
 
       - name: Upload Container Scan Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: container-scan-evidence
           path: 'trivy-results.sarif'
