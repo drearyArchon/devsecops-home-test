@@ -1,11 +1,11 @@
 services:
   attendance-board:
     build:
-      context: .
+      dockerfile: Dockerfile
     image: attendance-board:v0.1.1
     container_name: attendance-board
     ports:
       - 3000:3000
     env_file:
-      - .env
+      - ./src/.env
     restart: unless-stopped
