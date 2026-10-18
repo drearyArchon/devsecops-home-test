@@ -14,14 +14,13 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       actions: read
-      contents: read
-      pull-requests: write
       security-events: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-       
+        with:
+          fetch-depth: 0
       - name: Scan Terraform  
         uses: aquasecurity/trivy-action@6abccf398f78b4c337599c0656f933d91efb91a0
         with: 
