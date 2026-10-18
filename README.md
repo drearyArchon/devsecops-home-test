@@ -18,6 +18,8 @@
 
 Almost everything security related can be accessed through the GitHub repository without having to pull it. The pipelines are GitHub actions and the scan results are in the Security tab.
 
+The workflows uses QL Code to push their results onto the Security Tab, which requires that the repo is either public or owned by a registered enterprise.
+
 # CI/CD Workflow
 
 There are two pipelines: app-scan and terraform-scan.
