@@ -2,9 +2,10 @@ provider "aws" {
   region = "us-east-1"
 }
 
-module "execution_role" {
-  source = "../architecture"
-}
+# Not yet usable without full implementation
+# module "execution_role" {
+#   source = "../architecture"
+# }
 
 # ==========================================
 # 1. VPC & Private Subnets
@@ -143,11 +144,12 @@ resource "aws_vpc_endpoint" "s3_gateway" {
 # ==========================================
 # ALB is internal and only accessible through the API Gateway VPC Link
 resource "aws_lb" "internal_alb" {
-  name               = "attendance-internal-alb"
-  internal           = true
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.alb_sg.id]
-  subnets            = [aws_subnet.private_a.id, aws_subnet.private_b.id]
+  name                       = "attendance-internal-alb"
+  internal                   = true
+  load_balancer_type         = "application"
+  security_groups            = [aws_security_group.alb_sg.id]
+  subnets                    = [aws_subnet.private_a.id, aws_subnet.private_b.id]
+  drop_invalid_header_fields = true
 }
 
 resource "aws_lb_target_group" "ecs_tg" {
@@ -183,7 +185,8 @@ resource "aws_ecs_task_definition" "app_task" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
   memory                   = "512"
-  execution_role_arn       = module.execution_role.ecs_execution_role.arn
+  # Requires further implementation
+  # execution_role_arn       = module.execution_role.ecs_execution_role.arn
 
   container_definitions = jsonencode([{
     name         = "attendance-board"
